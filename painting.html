@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>画板</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+        <canvas id='xxx' width=300 height=300></canvas>
+        <script >
+        var canvas = document.getElementById('xxx')
+         var context = canvas.getContext('2d')
+         
+        var pageWidth = document.documentElement.clientWidth
+        var pageHeight = document.documentElement.clientHeight
+
+        canvas.width = pageWidth
+        canvas.height = pageHeight
+         
+         //画圈函数
+         function drawcricle(x, y, radius) {
+             context.beginPath();
+             context.arc(x, y, radius, 0, Math.PI * 2);
+             context.fill();
+           }
+           //声明
+         
+         var drawing = false
+         var lastPoint = {
+             x: undefined,
+             y: undefined
+           }
+           //鼠标按下
+         canvas.onmousedown = function(aaa) {
+           drawing = true;
+           var x = aaa.clientX;
+           var y = aaa.clientY;
+           drawcricle(x, y, 1);
+           lastPoint = {
+             'x': x,
+             'y': y
+           }
+         
+         }
+         
+         //鼠标移动
+         canvas.onmousemove = function(aaa) {
+           var x = aaa.clientX;
+           var y = aaa.clientY;
+           var newPoint = {
+             'x': x,
+             'y': y
+           }
+           if (drawing) {
+             context.beginPath();
+             context.moveTo(lastPoint.x, lastPoint.y);
+             context.lineTo(newPoint.x, newPoint.y);
+             context.stroke();
+             context.closePath();
+             lastPoint = newPoint;
+           }
+         }
+         
+         
+         
+         //鼠标松开
+         canvas.onmouseup = function(aaa) {
+           drawing = false
+         }
+         </script>
+</body>
+</html>
