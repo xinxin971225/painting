@@ -1,0 +1,14 @@
+#xxx{
+    border:1px solid black;
+    display:block;
+  }
+
+body{
+  margin:0;
+}
+
+#eraser{
+  position:fixed;
+  left:0;
+  bottom:0;
+}
