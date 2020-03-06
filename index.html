@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>画板</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+        <canvas id='canvas' ></canvas>
+        <div id="canvasTool" class="canvasTool">
+        <svg id="pen" class="active icon" >
+            <use xlink:href="#icon-pen"></use>
+        </svg>
+        <p id="penSize">当前粗细:1</p>
+        <button id="upLineWidth">+</button>
+        <button id="downLineWidth">-</button>
+        <p id="nowcolor">当前颜色:</p>
+        <input id="color-chose" class="jscolor" onchange="updatecolor(this.jscolor)" value="000000">
+          <svg id="eraser" class="icon">
+            <use xlink:href="#icon-eraser"></use>
+        </svg>
+          <svg id="clear" class="icon">
+            <use xlink:href="#icon-dustbin"></use>
+        </svg>
+          <svg id="download" class="icon">
+            <use xlink:href="#icon-save"></use>
+        </svg>
+        </div>
+
+        <script src="./js/color-chose/jscolor.js"></script>
+        <script src="./js/main.js"></script>
+<script src="//at.alicdn.com/t/font_1675369_tf425j7keue.js"></script>
+
+</body>
+</html>
