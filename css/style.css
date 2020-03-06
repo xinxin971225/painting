@@ -26,6 +26,9 @@ body{
   top:0;
   padding: 20px;
 }
+.canvasTool input{
+   width:50px;
+}
 .canvasTool svg{
   width:2em;
   height:1.5em;
