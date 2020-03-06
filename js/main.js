@@ -6,6 +6,8 @@ var pageHeight = document.documentElement.clientHeight
 canvas.width = pageWidth
 canvas.height = pageHeight
 let penSize = document.querySelector('#canvasTool>#penSize')
+let canvasHistory = [];
+let step = -1;
 //清空
   clear.onclick = function(){
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -69,52 +71,88 @@ nowcolor.style.color='#' + jscolor
 }
 
 
-   //鼠标按下
+
+
+
+
+       //鼠标按下
  canvas.onmousedown = function(aaa) {
    
-   var x = aaa.clientX;
-   var y = aaa.clientY;
-   if(useEraser){
-    context.clearRect(x-10,y-10,20,20);
-    drawing = true
-   }else{
-    drawing = true;
-    drawcricle(x-0.5, y-0.5, 1);
-    lastPoint = {
-     'x': x,
-     'y': y
-   }
- 
-   }
+    var x = aaa.clientX;
+    var y = aaa.clientY;
+    if(useEraser){
+     context.clearRect(x-10,y-10,20,20);
+     drawing = true
+    }else{
+     drawing = true;
+     drawcricle(x-0.5, y-0.5, 1);
+     lastPoint = {
+      'x': x,
+      'y': y
+    }
   
- }
-
- //鼠标移动
- canvas.onmousemove = function(aaa) {
-   var x = aaa.clientX;
-   var y = aaa.clientY;
-   var newPoint = {
-     'x': x,
-     'y': y
-   }
-   if (useEraser) {
-     if(drawing){
-      context.clearRect(x-10,y-10,20,20)
-     }
-   }else if(drawing){
-     context.beginPath();
-     context.moveTo(lastPoint.x, lastPoint.y);
-     context.lineTo(newPoint.x, newPoint.y);
-     context.stroke();
-     context.closePath();
-     lastPoint = newPoint;
-   }
- }
- 
- 
- 
- //鼠标松开
- canvas.onmouseup = function(aaa) {
-   drawing = false
+    }
    
- }
+  }
+ 
+  //鼠标移动
+  canvas.onmousemove = function(aaa) {
+    var x = aaa.clientX;
+    var y = aaa.clientY;
+    var newPoint = {
+      'x': x,
+      'y': y
+    }
+    if (useEraser) {
+      if(drawing){
+       context.clearRect(x-10,y-10,20,20)
+      }
+    }else if(drawing){
+      context.beginPath();
+      context.moveTo(lastPoint.x, lastPoint.y);
+      context.lineTo(newPoint.x, newPoint.y);
+      context.stroke();
+      context.closePath();
+      lastPoint = newPoint;
+    }
+}
+  
+  
+  
+  //鼠标松开
+  canvas.onmouseup = function(aaa) {
+    drawing = false;
+    step++;
+    if (step < canvasHistory.length) {
+    	canvasHistory.length = step; // 截断数组
+    }
+    canvasHistory.push(canvas.toDataURL()); // 添加新的绘制到历史记录
+    
+  }
+ 
+ 
+
+// 撤销方法
+canvasUndo.onclick = function() {
+  if (step >= 0) {
+    step--;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    let canvasPic = new Image();
+    canvasPic.src = canvasHistory[step];
+    canvasPic.addEventListener('load', () => {
+        context.drawImage(canvasPic, 0, 0);
+    });
+  }
+}
+// 反撤销方法
+canvasRedo.onclick = function() {
+  if (step < canvasHistory.length - 1) {
+    step++;
+    let canvasPic = new Image();
+    canvasPic.src = canvasHistory[step];
+    canvasPic.addEventListener('load', () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(canvasPic, 0, 0);
+    });
+  }
+}
