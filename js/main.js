@@ -29,12 +29,14 @@ let step = -1;
     context.lineWidth=context.lineWidth+1
 
     useEraser = false
+    eraser.classList.remove('active')
     penSize.innerHTML = '当前粗细:'+context.lineWidth
   }
   downLineWidth.onclick = function(){
     context.lineWidth=context.lineWidth-1
     penSize.innerHTML = '当前粗细:'+context.lineWidth
     useEraser = false
+    eraser.classList.remove('active')
   }
 
 
