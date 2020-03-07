@@ -7,15 +7,18 @@
 p{
   margin: 0;
 }
+
 *{box-sizing: border-box;}
 
 #canvas{
     border:1px solid black;
     display:block;
+   
   }
 
 body{
   margin:0;
+  overflow: hidden;
 }
 
 
